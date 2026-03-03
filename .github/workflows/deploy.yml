@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: ["main"] # Runs every time you push to the main branch
+    branches: ["main"]
 
 permissions:
   contents: read
@@ -24,14 +24,13 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Build TSX to HTML/JS
-        run: npm run build # This is the magic "transformation" step
+      - name: Build TSX to HTML
+        run: npx vite build # Using npx directly is more reliable for web-only editing
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist # Vite usually puts the final HTML here
+          path: ./dist
 
       - name: Deploy to GitHub Pages
-        id: deployment
         uses: actions/deploy-pages@v4
